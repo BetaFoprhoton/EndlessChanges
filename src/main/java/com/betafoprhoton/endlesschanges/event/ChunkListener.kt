@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 @EventBusSubscriber(modid = EndlessChangesMain.MODID, bus = EventBusSubscriber.Bus.MOD, value = [Dist.CLIENT])
 object ChunkListener {
     @SubscribeEvent
-    fun onClientSetup(event: ChunkEvent.Load?) {
+    fun onChunkLoad(event: ChunkEvent.Load?) {
         event ?: return
     }
 }

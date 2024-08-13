@@ -6,6 +6,8 @@ abstract class AbstractPlant {
     protected var health: Int = 0
         set(value) {field = value.coerceIn(0, 100)}
 
+    protected val minGrowWater: Int = 10
+    protected val mixGrowHealth: Int = 10
     abstract fun grow()
     abstract fun tick()
 }
