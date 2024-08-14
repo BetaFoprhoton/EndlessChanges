@@ -11,5 +11,6 @@ object ChunkListener {
     @SubscribeEvent
     fun onChunkLoad(event: ChunkEvent.Load?) {
         event ?: return
+
     }
 }

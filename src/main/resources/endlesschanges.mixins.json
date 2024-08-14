@@ -5,6 +5,7 @@
   "package": "com.betafoprhoton.endlesschanges.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ServerLevelMixin",
     "TreeFeatureMixin",
     "mushrooms.AbstractHugeMushroomFeatureMixin",
     "mushrooms.HugeBrownMushroomFeatureMixin"
