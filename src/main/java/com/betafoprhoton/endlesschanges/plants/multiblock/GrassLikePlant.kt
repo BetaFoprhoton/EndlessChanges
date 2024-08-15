@@ -1,23 +1,29 @@
 package com.betafoprhoton.endlesschanges.plants.multiblock
 
 import com.betafoprhoton.endlesschanges.plants.AbstractPlant
+import com.betafoprhoton.endlesschanges.util.extensions.toBlockPos
 import net.minecraft.core.BlockPos
-import net.minecraft.core.GlobalPos
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.WorldGenLevel
-import net.minecraft.world.level.block.FlowerBlock
-import net.minecraft.world.level.block.GrassBlock
-import net.minecraft.world.level.block.grower.OakTreeGrower
-import net.minecraft.world.level.levelgen.GenerationStep.Decoration
-import net.minecraft.world.level.levelgen.WorldGenerationContext
-import net.minecraftforge.event.level.ChunkDataEvent
+import net.minecraft.nbt.CompoundTag
 
-class GrassLikePlant(level: ServerLevel): AbstractPlant(level) {
-    private val mainBlock: BlockPos
-    private val rootsBlocks = HashSet
+class GrassLikePlant : AbstractPlant() {
+    var mainBlockPos: BlockPos = BlockPos.ZERO
+    protected val rootsBlocks = HashSet<BlockPos>()
 
-    override fun valueOf(string: String) {
-
+    companion object {
+        fun load(tag: CompoundTag): GrassLikePlant {
+            val plant = AbstractPlant.load(tag) as GrassLikePlant
+            plant.mainBlockPos = tag.getLong("mainBlockPos").toBlockPos()
+            plant.rootsBlocks.addAll(tag.getLongArray("rootsBlocks").map { it.toBlockPos() })
+            return plant
+        }
     }
+
+    override fun save(): CompoundTag {
+        val tag = super.save()
+        tag.putLong("mainBlockPos", mainBlockPos.asLong())
+        tag.putLongArray("rootsBlocks", rootsBlocks.map { it.asLong() }.toLongArray())
+        return tag
+    }
+
 
 }

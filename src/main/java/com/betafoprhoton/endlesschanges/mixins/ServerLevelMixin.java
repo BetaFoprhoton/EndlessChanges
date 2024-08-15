@@ -44,8 +44,9 @@ public abstract class ServerLevelMixin extends Level {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void ServerLevel(MinecraftServer p_214999_, Executor p_215000_, LevelStorageSource.LevelStorageAccess p_215001_, ServerLevelData p_215002_, ResourceKey p_215003_, LevelStem p_215004_, ChunkProgressListener p_215005_, boolean p_215006_, long p_215007_, List p_215008_, boolean p_215009_, RandomSequences p_288977_, CallbackInfo ci) {
-        this.endlessChanges$plantsSavedData = this.getDataStorage().computeIfAbsent((compoundTag) ->
-                PlantsSavedData.Companion.load((ServerLevel)(Object)this, compoundTag),
+        this.endlessChanges$plantsSavedData = this.getDataStorage().computeIfAbsent(
+                (compoundTag) ->
+                    PlantsSavedData.Companion.load((ServerLevel)(Object)this, compoundTag),
                 () -> new PlantsSavedData((ServerLevel)(Object)this),
                 Raids.getFileId(this.dimensionTypeRegistration())
         );
