@@ -7,28 +7,28 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 
 class GrassLikePlant : AbstractPlant() {
-    protected val mainBlocks = HashSet<BlockPos>()
-    protected val rootsBlocks = HashSet<BlockPos>()
+    protected val main = HashSet<BlockPos>()
+    protected val roots = HashSet<BlockPos>()
 
     override fun tick(level: ServerLevel) {
         super.tick(level)
-        level.isAllLoaded(mainBlocks, rootsBlocks)
+        if (!level.isAllLoaded(main, roots)) return
 
     }
 
     companion object {
         fun load(tag: CompoundTag): GrassLikePlant {
             val plant = AbstractPlant.load(tag) as GrassLikePlant
-            plant.mainBlocks.addAll(tag.getLongArray("mainBlocks").map { it.toBlockPos() })
-            plant.rootsBlocks.addAll(tag.getLongArray("rootsBlocks").map { it.toBlockPos() })
+            plant.main.addAll(tag.getLongArray("main").map { it.toBlockPos() })
+            plant.roots.addAll(tag.getLongArray("rootsBlocks").map { it.toBlockPos() })
             return plant
         }
     }
 
     override fun save(): CompoundTag {
         val tag = super.save()
-        tag.putLongArray("mainBlocks", mainBlocks.map { it.asLong() }.toLongArray())
-        tag.putLongArray("rootsBlocks", rootsBlocks.map { it.asLong() }.toLongArray())
+        tag.putLongArray("main", main.map { it.asLong() }.toLongArray())
+        tag.putLongArray("rootsBlocks", roots.map { it.asLong() }.toLongArray())
         return tag
     }
 

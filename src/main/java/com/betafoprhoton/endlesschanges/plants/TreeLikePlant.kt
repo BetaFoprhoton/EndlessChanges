@@ -1,5 +1,6 @@
 package com.betafoprhoton.endlesschanges.plants
 
+import com.betafoprhoton.endlesschanges.util.extensions.isAllLoaded
 import com.betafoprhoton.endlesschanges.util.extensions.toBlockPos
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
@@ -11,8 +12,7 @@ class TreeLikePlant(): AbstractPlant() {
     protected val roots = HashSet<BlockPos>()
 
     override fun tick(level: ServerLevel) {
-        super.tick(level)
-        TODO()
+        if (!level.isAllLoaded(trunks, foliage, roots)) return
     }
 
     companion object {

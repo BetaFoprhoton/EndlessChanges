@@ -1,17 +1,17 @@
 package com.betafoprhoton.endlesschanges.plants
 
+import com.betafoprhoton.endlesschanges.util.extensions.isAllLoaded
 import com.betafoprhoton.endlesschanges.util.extensions.toBlockPos
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 
-class VineLikePlant(): AbstractPlant() {
+class VineLikePlant: AbstractPlant() {
     protected val vines = HashSet<BlockPos>()
     protected val attaches = HashSet<BlockPos>()
 
     override fun tick(level: ServerLevel) {
-        super.tick(level)
-        TODO()
+        if (!level.isAllLoaded(vines, attaches)) return
     }
 
     companion object {
