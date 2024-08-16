@@ -1,15 +1,19 @@
-package com.betafoprhoton.endlesschanges.plants.multiblock
+package com.betafoprhoton.endlesschanges.plants
 
-import com.betafoprhoton.endlesschanges.plants.AbstractPlant
 import com.betafoprhoton.endlesschanges.util.extensions.toBlockPos
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.Level
+import net.minecraft.server.level.ServerLevel
 
 class TreeLikePlant(): AbstractPlant() {
     protected val trunks = HashSet<BlockPos>()
     protected val foliage = HashSet<BlockPos>()
     protected val roots = HashSet<BlockPos>()
+
+    override fun tick(level: ServerLevel) {
+        super.tick(level)
+        TODO()
+    }
 
     companion object {
         fun load(tag: CompoundTag): TreeLikePlant {

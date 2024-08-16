@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 @Mixin(ServerLevel.class)
@@ -50,6 +51,11 @@ public abstract class ServerLevelMixin extends Level {
                 () -> new PlantsSavedData((ServerLevel)(Object)this),
                 Raids.getFileId(this.dimensionTypeRegistration())
         );
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;updateSkyBrightness()V"))
+    public void tick(BooleanSupplier supplier, CallbackInfo ci) {
+        endlessChanges$plantsSavedData.tick();
     }
 
 }

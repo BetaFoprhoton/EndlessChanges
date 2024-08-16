@@ -1,8 +1,8 @@
 package com.betafoprhoton.endlesschanges.util
 
-import com.betafoprhoton.endlesschanges.plants.multiblock.GrassLikePlant
-import com.betafoprhoton.endlesschanges.plants.multiblock.TreeLikePlant
-import com.betafoprhoton.endlesschanges.plants.multiblock.VineLikePlant
+import com.betafoprhoton.endlesschanges.plants.GrassLikePlant
+import com.betafoprhoton.endlesschanges.plants.TreeLikePlant
+import com.betafoprhoton.endlesschanges.plants.VineLikePlant
 import com.betafoprhoton.endlesschanges.util.extensions.getCompoundTags
 import com.betafoprhoton.endlesschanges.util.extensions.putCompoundTags
 import net.minecraft.nbt.CompoundTag
@@ -13,22 +13,30 @@ class PlantsSavedData(protected val level: ServerLevel) : SavedData() {
     protected val treeLikePlants = HashSet<TreeLikePlant>()
     protected val grassLikePlants = HashSet<GrassLikePlant>()
     protected val vineLikePlant = HashSet<VineLikePlant>()
+    var serverTickTime: Long = 0
+
+    fun tick() {
+        treeLikePlants.forEach { it.tick(level) }
+        grassLikePlants.forEach { it.tick(level) }
+        vineLikePlant.forEach { it.tick(level) }
+        serverTickTime ++
+    }
 
     //Need for more efficient storage methods
     companion object {
         fun load(level: ServerLevel, tag: CompoundTag): PlantsSavedData {
             val data = PlantsSavedData(level)
-            val lengths = tag.getIntArray("PlantsLength")
 
-            tag.getCompoundTags("treeLikePlants", lengths[0])
+            tag.getCompoundTags("treeLikePlants")
                 .map { TreeLikePlant.load(it) }
                 .forEach { data.treeLikePlants.add(it) }
-            tag.getCompoundTags("grassLikePlants", lengths[1])
+            tag.getCompoundTags("grassLikePlants")
                 .map { GrassLikePlant.load(it) }
                 .forEach { data.grassLikePlants.add(it) }
-            tag.getCompoundTags("vineLikePlants", lengths[2])
+            tag.getCompoundTags("vineLikePlants")
                 .map { VineLikePlant.load(it) }
                 .forEach { data.vineLikePlant.add(it) }
+            data.serverTickTime = tag.getLong("serverTickTime")
 
             return data
         }
@@ -38,7 +46,7 @@ class PlantsSavedData(protected val level: ServerLevel) : SavedData() {
         tag.putCompoundTags("treeLikePlants", treeLikePlants.map { it.save() })
         tag.putCompoundTags("grassLikePlants", grassLikePlants.map { it.save() })
         tag.putCompoundTags("vineLikePlants", vineLikePlant.map { it.save() })
-        tag.putIntArray("PlantsLength", intArrayOf(treeLikePlants.size, grassLikePlants.size, vineLikePlant.size))
+        tag.putLong("serverTickTime", serverTickTime)
         return tag
     }
 }
