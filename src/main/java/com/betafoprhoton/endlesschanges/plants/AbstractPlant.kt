@@ -1,10 +1,12 @@
 package com.betafoprhoton.endlesschanges.plants
 
+import com.betafoprhoton.endlesschanges.util.ObjectPlantProperties
 import com.betafoprhoton.endlesschanges.util.PlantRequiredElement
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 
 open class AbstractPlant {
+    private val plantProperties = ObjectPlantProperties.PlantProperties()
     protected var water: Int = 0
         set(value) { field = if (maxWater != -1) value.coerceIn(0, maxWater) else value }
     protected var health: Int = 0

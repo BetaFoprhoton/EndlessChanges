@@ -1,7 +1,9 @@
 package com.betafoprhoton.endlesschanges.util
 
-object PlantProperties {
+object ObjectPlantProperties {
     open class BodyBlock {
+        val isEnabled = true
+
         var canStoreElement: IntArray = intArrayOf(0, 0, 0, 0, 0, 0) //C O N P K S
             set(value) {
                 var temp = IntArray(6)
@@ -14,6 +16,8 @@ object PlantProperties {
         var canStoreWater = 0
 
         var heathStore = 0
+
+        var keepCostWater = 0
 
         var growCostElement = PlantRequiredElement()
 
@@ -58,4 +62,13 @@ object PlantProperties {
             set(value) {field = value.coerceIn(0, 1000)}
 
     }
+
+    class PlantProperties {
+        val name: String = ""
+        var bodyBlock = BodyBlock()
+        var foliageBlock = FoliageBlock()
+        var rootBlock = RootBlock()
+    }
+
+
 }
