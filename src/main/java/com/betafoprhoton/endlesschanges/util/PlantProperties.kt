@@ -1,8 +1,10 @@
 package com.betafoprhoton.endlesschanges.util
 
+import net.minecraft.world.level.block.Block
+
 object ObjectPlantProperties {
     open class BodyBlock {
-        val isEnabled = true
+        var includeBlocks = HashSet<Block>()
 
         var canStoreElement: IntArray = intArrayOf(0, 0, 0, 0, 0, 0) //C O N P K S
             set(value) {
@@ -63,11 +65,23 @@ object ObjectPlantProperties {
 
     }
 
-    class PlantProperties {
-        val name: String = ""
+    class GrassLikePlantProperties {
+        var name = ""
         var bodyBlock = BodyBlock()
-        var foliageBlock = FoliageBlock()
         var rootBlock = RootBlock()
+    }
+
+    class TreeLikePlantProperties {
+        var name = ""
+        var foliageBlock = FoliageBlock()
+        var bodyBlock = BodyBlock()
+        var rootBlock = RootBlock()
+    }
+
+    class VineLikePlant {
+        var name = ""
+        var bodyBlock = BodyBlock()
+        var attachesBlock = RootBlock()
     }
 
 

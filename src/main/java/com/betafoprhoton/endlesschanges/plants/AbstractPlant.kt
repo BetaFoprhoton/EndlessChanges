@@ -4,6 +4,7 @@ import com.betafoprhoton.endlesschanges.util.ObjectPlantProperties
 import com.betafoprhoton.endlesschanges.util.PlantRequiredElement
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.VineBlock
 
 open class AbstractPlant {
     private val plantProperties = ObjectPlantProperties.PlantProperties()

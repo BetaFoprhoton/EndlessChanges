@@ -1,5 +1,6 @@
 package com.betafoprhoton.endlesschanges.util
 
+import com.betafoprhoton.endlesschanges.EndlessChangesConfig
 import com.betafoprhoton.endlesschanges.plants.GrassLikePlant
 import com.betafoprhoton.endlesschanges.plants.TreeLikePlant
 import com.betafoprhoton.endlesschanges.plants.VineLikePlant
@@ -8,17 +9,29 @@ import com.betafoprhoton.endlesschanges.util.extensions.putCompoundTags
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.saveddata.SavedData
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class PlantsSavedData(protected val level: ServerLevel) : SavedData() {
     protected val treeLikePlants = HashSet<TreeLikePlant>()
     protected val grassLikePlants = HashSet<GrassLikePlant>()
     protected val vineLikePlant = HashSet<VineLikePlant>()
     var serverTickTime: Long = 0
+    val maxTickChance = EndlessChangesConfig.PlantMaxTickChance.get()
 
     fun tick() {
-        treeLikePlants.forEach { it.tick(level) }
-        grassLikePlants.forEach { it.tick(level) }
-        vineLikePlant.forEach { it.tick(level) }
+        treeLikePlants.forEach {
+            if (Random.nextInt(1..100) <= maxTickChance)
+                it.tick(level)
+        }
+        grassLikePlants.forEach {
+            if (Random.nextInt(1..100) <= maxTickChance)
+                it.tick(level)
+        }
+        vineLikePlant.forEach {
+            if (Random.nextInt(1..100) <= maxTickChance)
+                it.tick(level)
+        }
         serverTickTime ++
     }
 
